@@ -2,33 +2,30 @@ package com.example.springbootjenkins.service;
 
 import com.example.springbootjenkins.controller.HousingController;
 import com.example.springbootjenkins.dto.HousingResponse;
+import com.example.springbootjenkins.mapper.HousingMapper;
+import com.example.springbootjenkins.repository.HousingRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class HousingService {
-    private final List<HousingResponse> housingResponseList;
+    @Autowired
+    private HousingRepository housingRepository;
+    @Autowired
+    private HousingMapper housingMapper;
     public static Logger logger = LoggerFactory.getLogger(HousingService.class);
 
-    // Constructor to initialize the list and add sample data
-    public HousingService() {
-        this.housingResponseList = new ArrayList<>();
-        initializeHousingList();
-    }
-
-    // Method to initialize the list with sample data
-    private void initializeHousingList() {
-        HousingResponse hr = new HousingResponse(1L, "Heloise", "104 av de Paris", "Paris");
-        housingResponseList.add(hr);
-    }
-
     // Method to get the list of housing responses
-    public List<HousingResponse> getHousingResponses() {
-        return new ArrayList<>(housingResponseList);
+    public List<HousingResponse> findAllHousing() {
+        return housingRepository.findAll().stream()
+                .map(housingMapper::fromHousing)
+                .collect(Collectors.toList());
     }
 
 }

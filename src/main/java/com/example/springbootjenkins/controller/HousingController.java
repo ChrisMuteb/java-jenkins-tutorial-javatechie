@@ -26,6 +26,6 @@ public class HousingController {
     public ResponseEntity<List<HousingResponse>> findAllHousing(){
         return ResponseEntity.ok()
                 .header("Custom-Header", "foo")
-                .body(housingService.getHousingResponses());
+                .body(housingService.findAllHousing());
     }
 }

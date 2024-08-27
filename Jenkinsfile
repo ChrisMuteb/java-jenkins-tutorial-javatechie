@@ -6,8 +6,6 @@ pipeline {
     }
 
     stages {
-
-
         stage('Build maven') {
             steps {
                 // Build the Docker image, passing the environment variable
@@ -21,7 +19,7 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t chrismuteb/devops-integration .'
+                    sh 'docker build --platform linux/amd64 -t chrismuteb/springboot-jenkins .'
                 }
             }
         }
@@ -31,7 +29,7 @@ pipeline {
                     withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerhubpwd')]) {
                     sh 'docker login -u chrismuteb -p ${dockerhubpwd}'
 }
-                    sh 'docker push chrismuteb/devops-integration'
+                    sh 'docker push chrismuteb/springboot-jenkins'
                 }
             }
         }
