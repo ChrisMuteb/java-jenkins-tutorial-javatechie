@@ -1,4 +1,4 @@
 FROM amazoncorretto:17.0.7-alpine
 EXPOSE 8081
-ADD target/devops-integration.jar devops-integration.jar
-ENTRYPOINT ["java", "-jar", "/devops-integration.jar"]
+ADD target/springboot-jenkins.jar springboot-jenkins.jar
+ENTRYPOINT ["java", "-jar", "/springboot-jenkins.jar"]
