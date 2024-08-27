@@ -1,7 +1,9 @@
 package com.example.springbootjenkins.service;
 
 import com.example.springbootjenkins.controller.HousingController;
+import com.example.springbootjenkins.dto.HousingRequest;
 import com.example.springbootjenkins.dto.HousingResponse;
+import com.example.springbootjenkins.entity.Housing;
 import com.example.springbootjenkins.mapper.HousingMapper;
 import com.example.springbootjenkins.repository.HousingRepository;
 import org.slf4j.Logger;
@@ -27,5 +29,13 @@ public class HousingService {
                 .map(housingMapper::fromHousing)
                 .collect(Collectors.toList());
     }
+
+    public HousingResponse saveHousing(HousingRequest request){
+        Housing housing = new HousingMapper().toHousing(request);
+        var savedHousing = housingRepository.save(housing);
+        return new HousingMapper().fromHousing(savedHousing);
+    }
+
+
 
 }
